@@ -28,6 +28,12 @@ variable "region" {
   type        = string
 }
 
+variable "vpc_name" {
+  default     = "vpc-network"
+  description = "VPC name"
+  type        = string
+}
+
 variable "roles" {
   type        = list(string)
   description = "List of roles"
