@@ -6,28 +6,23 @@ resource "random_id" "sa_id" {
   byte_length = 5
 }
 
-# data "google_iam_role" "role_permissions" {
-#   for_each = toset(var.roles)
-#   name     = each.value
-# }
+resource "google_project_iam_member" "iam_role" {
+  for_each = toset(var.roles)
+  project  = var.project_id
+  role     = each.value
+  member   = "serviceAccount:${google_service_account.service_account.email}"
+}
 
 resource "google_service_account" "service_account" {
   account_id   = "${var.name}-${random_id.sa_id.hex}"
   display_name = var.name
 }
 
-resource "google_compute_network" "vpc_network" {
-  name                    = var.vpc_name
-  auto_create_subnetworks = false
-  project                 = var.project_id
+resource "google_service_account_key" "service_account_key" {
+  service_account_id = google_service_account.service_account.name
+  public_key_type    = "TYPE_X509_PEM_FILE"
 }
 
-resource "google_compute_subnetwork" "subnet" {
-  name          = "subnet-${var.name}"
-  ip_cidr_range = var.ip_cidr_range
-  region        = var.region
-  network       = google_compute_network.vpc_network.id
-}
 
 resource "google_compute_instance" "gce" {
   name         = var.name
@@ -49,13 +44,23 @@ resource "google_compute_instance" "gce" {
     network    = google_compute_network.vpc_network.self_link
     subnetwork = google_compute_subnetwork.subnet.self_link
 
-    # access_config {
-    #   // Ephemeral public IP
-    # }
+    access_config {
+      nat_ip = google_compute_address.external_ip.address
+    }
   }
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = google_service_account.service_account.email
     scopes = ["cloud-platform"]
   }
+
+  tags = [
+    "${var.name}-firewall-ssh",
+    "${var.name}-firewall-http",
+    "${var.name}-firewall-https",
+    "${var.name}-firewall-icmp",
+    "${var.name}-firewall-postgresql",
+    "${var.name}-firewall-openshift-console",
+    "${var.name}-firewall-secure-forward",
+  ]
 }

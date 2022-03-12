@@ -39,8 +39,14 @@ variable "ip_cidr_range" {
   type        = string
 }
 
+variable "fw_source_range" {
+  description = "Range of IPs wich will be allow in firewall"
+  type        = list(string)
+  default     = ["10.0.0.0/24", "10.0.1.0/24"]
+}
+
 variable "roles" {
   type        = list(string)
   description = "List of roles"
-  default     = []
+  default     = ["member", "ne-member"]
 }
