@@ -34,6 +34,11 @@ variable "vpc_name" {
   type        = string
 }
 
+variable "ip_cidr_range" {
+  description = "Range of IPs in the subnet (ex. 10.0.0.0/22)"
+  type        = string
+}
+
 variable "roles" {
   type        = list(string)
   description = "List of roles"

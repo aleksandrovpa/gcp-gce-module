@@ -17,9 +17,16 @@ resource "google_service_account" "service_account" {
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = var.vpc_name
+  name                    = var.vpc_name
   auto_create_subnetworks = false
-  project = var.project_id
+  project                 = var.project_id
+}
+
+resource "google_compute_subnetwork" "subnet" {
+  name          = "subnet-${var.name}"
+  ip_cidr_range = var.ip_cidr_range
+  region        = var.region
+  network       = google_compute_network.vpc_network.id
 }
 
 resource "google_compute_instance" "gce" {
@@ -39,11 +46,12 @@ resource "google_compute_instance" "gce" {
   }
 
   network_interface {
-    network = google_compute_network.vpc_network.self_link
+    network    = google_compute_network.vpc_network.self_link
+    subnetwork = google_compute_subnetwork.subnet.self_link
 
-    access_config {
-      // Ephemeral public IP
-    }
+    # access_config {
+    #   // Ephemeral public IP
+    # }
   }
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
