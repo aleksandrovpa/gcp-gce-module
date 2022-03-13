@@ -6,7 +6,7 @@ variable "name" {
 
 variable "machine_type" {
   default     = "e2-medium"
-  description = "Type of VM"
+  description = "Type of VM (https://cloud.google.com/compute/vm-instance-pricing)"
   type        = string
 }
 
