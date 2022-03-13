@@ -12,7 +12,7 @@
 | Name | Version |
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | 4.13.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.1.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -40,7 +40,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_fw_source_range"></a> [fw\_source\_range](#input\_fw\_source\_range) | Range of IPs wich will be allow in firewall | `list(string)` | <pre>[<br>  "10.0.0.0/24",<br>  "10.0.1.0/24"<br>]</pre> | no |
 | <a name="input_ip_cidr_range"></a> [ip\_cidr\_range](#input\_ip\_cidr\_range) | Range of IPs in the subnet (ex. 10.0.0.0/22) | `string` | n/a | yes |
-| <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | Type of VM | `string` | `"e2-medium"` | no |
+| <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | Type of VM (https://cloud.google.com/compute/vm-instance-pricing) | `string` | `"e2-medium"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of SA and VM | `string` | `"test"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Project ID | `string` | `"your-project-name"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region name (https://cloud.google.com/compute/docs/regions-zones#available) | `string` | `"europe-west4"` | no |
