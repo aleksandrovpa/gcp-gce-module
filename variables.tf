@@ -11,26 +11,32 @@ variable "machine_type" {
 }
 
 variable "project_id" {
-  default     = "aleksandrov-gatech-test"
+  default     = "your-project-name"
   description = "Project ID"
   type        = string
 }
 
 variable "zone" {
   default     = "europe-west4-a"
-  description = "Zone name"
+  description = "Zone name (https://cloud.google.com/compute/docs/regions-zones#available)"
   type        = string
 }
 
 variable "region" {
   default     = "europe-west4"
-  description = "Zone name"
+  description = "Region name (https://cloud.google.com/compute/docs/regions-zones#available)"
   type        = string
 }
 
 variable "vpc_name" {
   default     = "vpc-network"
   description = "VPC name"
+  type        = string
+}
+
+variable "subnet_name" {
+  default     = "default"
+  description = "Subnet name"
   type        = string
 }
 
@@ -47,6 +53,6 @@ variable "fw_source_range" {
 
 variable "roles" {
   type        = list(string)
-  description = "List of roles"
-  default     = ["member", "ne-member"]
+  description = "List of roles wich could be found here https://cloud.google.com/iam/docs/permissions-reference"
+  default     = ["roles/editor"]
 }
