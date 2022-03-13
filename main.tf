@@ -58,9 +58,5 @@ resource "google_compute_instance" "gce" {
     "${var.name}-firewall-ssh",
     "${var.name}-firewall-http",
     "${var.name}-firewall-https",
-    "${var.name}-firewall-icmp",
-    "${var.name}-firewall-postgresql",
-    "${var.name}-firewall-openshift-console",
-    "${var.name}-firewall-secure-forward",
   ]
 }
